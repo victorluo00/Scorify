@@ -1,0 +1,21 @@
+{
+  "name": "vekpr",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qkrrbtjd90/vekpr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qkrrbtjd90/vekpr/issues"
+  },
+  "homepage": "https://github.com/qkrrbtjd90/vekpr#readme"
+}
