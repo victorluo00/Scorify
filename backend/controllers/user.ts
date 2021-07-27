@@ -2,10 +2,11 @@ import { Request, Response, NextFunction } from 'express';
 
 const fetch = require('node-fetch');
 const { SPOTIFY_TOKEN } = require('../env.ts');
-class PlaylistController {
-  async getPlaylist(req: Request, res: Response, next: NextFunction) {
+
+class UserController {
+  async getUserData(req: Request, res: Response, next: NextFunction) {
     const rawData = await fetch(
-      `https://api.spotify.com/v1/playlists/${req.params.id}`,
+      `https://api.spotify.com/v1/users/${req.params.id}`,
       {
         method: 'GET',
         headers: {
@@ -16,12 +17,12 @@ class PlaylistController {
       }
     );
 
-    res.locals.playlist = await rawData.json();
+    res.locals.user = await rawData.json();
 
     next();
   }
 }
 
-const playlistController = new PlaylistController();
+const userController = new UserController();
 
-export default playlistController;
+export default userController;
