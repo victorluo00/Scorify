@@ -39,8 +39,6 @@ export const useStyles = makeStyles({
     backgroundColor: 'white',
   },
   mainPane: {
-    width: '100%',
-    height: '100%',
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'row',

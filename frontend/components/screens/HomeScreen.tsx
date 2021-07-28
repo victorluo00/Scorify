@@ -86,8 +86,6 @@ export default function AuthScreen(): JSX.Element {
   );
 }
 const HomePage = styled.div`
-  display: flex;
   width: 100%;
   height: 100%;
-  background-color: #191414;
 `;
