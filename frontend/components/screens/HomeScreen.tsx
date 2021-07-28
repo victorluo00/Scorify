@@ -14,7 +14,7 @@ import PlaylistBox from '../PlaylistBox';
 
 interface Playlist {
   name: string;
-  playlistId: string;
+  playlistId: number;
   photo: string;
 }
 
@@ -23,19 +23,31 @@ export default function AuthScreen(): JSX.Element {
   //declare playlists array
   const playlists: Array<any> = [];
   //fetch req to endpoint
-  fetch('/playlist')
+  for (let i = 0; i < 10; i++) {
+    playlists.push(
+      <PlaylistBox
+        name="Bangers Only"
+        playlistId={69 + i}
+        photo="/../../assets/PlaylistCover.png"
+      />
+    );
+  }
+  fetch('/api/playlist')
     //iterate through res
     .then((res) => res.json())
-    .then((data) =>
-      data.map((ele: any): object => {
-        const playlistObj: Playlist = {
-          name: ele.items.name,
-          playlistId: ele.items.playlistId,
-          photo: ele.items.photo,
-        };
-        return playlistObj;
-      })
-    )
+    .then((data) => {
+      console.log('data', data);
+      if (data) {
+        return data.map((ele: any): object => {
+          const playlistObj: Playlist = {
+            name: ele.items.name,
+            playlistId: ele.items.playlistId,
+            photo: ele.items.photo,
+          };
+          return playlistObj;
+        });
+      }
+    })
     //grab name, playlist id, cover photo
     .then((playlistList) =>
       playlistList.map((ele: Playlist) => (
@@ -67,16 +79,15 @@ export default function AuthScreen(): JSX.Element {
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
-      <Container maxWidth={false} className={classes.root}>
-        <div className={classes.splitScreen}>
-          <div className={classes.topPane}></div>
-          <div className={classes.bottomPane}>{playlists}</div>
-        </div>
-      </Container>
+      <HomePage>
+        <div className={classes.mainPane}>{playlists}</div>
+      </HomePage>
     </>
   );
 }
-
-const PlaylistContainer = styled.div`
+const HomePage = styled.div`
   display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: #191414;
 `;
