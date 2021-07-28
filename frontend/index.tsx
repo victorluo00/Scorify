@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { render } from 'react-dom';
 import { createStore, applyMiddleware, Store } from 'redux';
 import { Provider } from 'react-redux';
@@ -12,7 +11,7 @@ const store: Store<ArticleState, ArticleAction> & {
   dispatch: DispatchType;
 } = createStore(reducer, applyMiddleware(thunk));
 
-ReactDOM.render(
+render(
   <Provider store={store}>
     <App />
   </Provider>,
