@@ -27,8 +27,8 @@ export default PlaylistDetailScreen;
 const useStyles = makeStyles({
 	root: {
 		height: '100vh',
-		paddingLeft: 0,
-		paddingRight: 0,
+		// paddingLeft: 0,
+		// paddingRight: 0,
 		backgroundColor: '#191414',
 		display: 'flex',
 		flexDirection: 'column',

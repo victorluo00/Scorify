@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import Score from '../playlistDetails/Score';
+import ScoreBreakdown from '../playlistDetails/ScoreBreakdown';
 import Share from '../playlistDetails/Share';
 
 const PlaylistDetailScreen: FC = () => {
@@ -7,6 +8,7 @@ const PlaylistDetailScreen: FC = () => {
 		<>
 			<Score />
 			<Share />
+			<ScoreBreakdown />
 		</>
 	);
 };
