@@ -2,8 +2,6 @@ import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 
 const cookieParser = require('cookie-parser');
-const passport = require('passport');
-const SpotifyStrategy = require('passport-spotify').Strategy;
 const { CLIENT_ID, CLIENT_SECRET } = require('./env.ts');
 const fetch = require('node-fetch');
 
@@ -62,61 +60,21 @@ app.get('/callback', function (req, res) {
     authOptions,
     function (error: any, response: Response, body: any) {
       var access_token = body.access_token;
-      let uri = 'http://localhost:3000/home';
+      let uri = 'http://localhost:3000/playlist';
       res.cookie('access_token', access_token);
       res.redirect(uri);
     }
   );
 });
 
-app.get('/home', loadDataMiddleware, (req, res) => {
-  res
-    .status(200)
-    .json({ user: res.locals.user, playlist: res.locals.playlists });
-});
+//on component render, send get request to /playlist
+app.use('/playlist', playlistRouter);
 
-async function loadDataMiddleware(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
-  const access_token = req.cookies.access_token;
-  console.log(
-    '🚀 | file: server.ts | line 112 | loadDataMiddleware | access_token',
-    access_token
-  );
-
-  const rawUser = await fetch(`https://api.spotify.com/v1/me`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + access_token,
-    },
-  });
-
-  res.locals.user = await rawUser.json();
-
-  if (res.locals.user.error) {
-    console.log('Caught expired token');
-    if (res.locals.user.error.message === 'The access token expired')
-      res.redirect('/login');
-    return next();
-  }
-
-  const rawPlaylist = await fetch(`https://api.spotify.com/v1/me/playlists`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + access_token,
-    },
-  });
-
-  res.locals.playlists = await rawPlaylist.json();
-
-  next();
-}
+// app.get('/home', loadDataMiddleware, (req, res) => {
+//   res
+//     .status(200)
+//     .json({ user: res.locals.user, playlist: res.locals.playlists });
+// });
 
 /////////////////////////////////////////////////////////
 
