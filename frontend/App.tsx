@@ -14,12 +14,13 @@ import './index.css';
 export const App:FC = () => {
   
   return (<div>
-    <Router>
-      <Switch>
+    {/* <Router> */}
+      {/* <Switch>
         <Route exact path='/' component={LandingPage} />
-        <Route path="/home" component={HomeScreen} /> 
+        <Route path="/home" component={HomeScreen} />  */}
         {/* <Route path="/user/:accessToken/:refreshToken" component={HomeScreen} /> */}
-      </Switch>
-     </Router>
+      {/* </Switch>
+     </Router> */}
+     <PlaylistDetailScreen/>
    </div>); 
 };

@@ -5,6 +5,8 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { App } from './App';
 import reducer from './store/reducer';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 // pass the reducer function as an argument to create new Redux store
 const store: Store<ArticleState, ArticleAction> & {

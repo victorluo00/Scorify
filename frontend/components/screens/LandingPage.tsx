@@ -6,6 +6,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import {ProgressBar } from 'react-bootstrap';
+import { LinearProgress } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,12 +57,17 @@ export default function LandingPage(): JSX.Element {
   const classes = useStyles();
   
   return (
+    <div>
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
+      {/* <ProgressBar></ProgressBar> */}
+     
       <Grid item xs={12} sm={12} md={12}className={classes.screen} >
         <Typography component='div' className={classes.projectName}>Scorify</Typography>
         <div className={classes.descriptionText}>Score your playlists</div>
-        <Button
+        
+        
+            <Button
               type="submit"
               variant="contained"
               color="primary"
@@ -68,9 +75,10 @@ export default function LandingPage(): JSX.Element {
               startIcon={<Avatar className={classes.spotifyLogo} src={'https://w7.pngwing.com/pngs/879/271/png-transparent-spotify-computer-icons-streaming-media-music-home-icons-hand-logo-music-download.png'} />}
             >
               Log In With Spotify
-            </Button>
-        </Grid>
+            </Button>    
 
+        </Grid>
     </Grid>
+  </div>
   );
 }
