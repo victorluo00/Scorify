@@ -12,7 +12,7 @@ export const useStyles = makeStyles({
   container: {
     backgroundColor: '#cfe8fc',
     fontFamily: 'Gotham',
-    width: '100%'
+    width: '100%',
   },
   splitScreen: {
     display: 'flex',
@@ -26,14 +26,29 @@ export const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     // MozColumnWidth: '50%',
-    backgroundColor: '#191414'
+    backgroundColor: '#191414',
   },
   bottomPane: {
     width: '100%',
     height: '50%',
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    // justifyContent: 'center',
+    // alignItems: 'center',
     backgroundColor: 'white',
   },
-})
+  mainPane: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    // justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
+  menuButton: {
+    marginRight: 2,
+  },
+  title: {
+    flexGrow: 1,
+  },
+});
