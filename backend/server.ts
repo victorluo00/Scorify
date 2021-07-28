@@ -86,7 +86,7 @@ async function loadDataMiddleware(
     access_token
   );
 
-  const rawUser = await fetch(`https://api.spotify.com/v1/me`, {
+  const rawUser = await fetch(`https://api.spotify.com/v1`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -96,7 +96,8 @@ async function loadDataMiddleware(
   });
 
   res.locals.user = await rawUser.json();
-
+  // res.locals.user = await rawUser;
+  console.log('res.locals.user', rawUser);
   if (res.locals.user.error) {
     console.log('Caught expired token');
     if (res.locals.user.error.message === 'The access token expired')
