@@ -74,7 +74,7 @@ export default function AuthScreen(): JSX.Element {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            News
+            Scorify
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
