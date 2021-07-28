@@ -32,6 +32,17 @@ export default function AuthScreen(): JSX.Element {
       />
     );
   }
+
+  function getPlaylist() {
+    console.log('getPlaylist');
+    fetch('http://localhost:3000/playlist', {
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then((data) => data.json())
+      .then((data) => console.log(data));
+  }
+
   fetch('/api/playlist')
     //iterate through res
     .then((res) => res.json())
@@ -76,7 +87,9 @@ export default function AuthScreen(): JSX.Element {
           <Typography variant="h6" className={classes.title}>
             Scorify
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button onClick={getPlaylist} color="inherit">
+            Sign Out
+          </Button>
         </Toolbar>
       </AppBar>
       <HomePage>
