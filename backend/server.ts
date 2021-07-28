@@ -1,11 +1,11 @@
 import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
+const cors = require('cors');
 
 const cookieParser = require('cookie-parser');
 const { CLIENT_ID, CLIENT_SECRET } = require('./env.ts');
-const fetch = require('node-fetch');
 
-let querystring = require('querystring');
+const querystring = require('querystring');
 
 import { playlistRouter, userRouter } from './routers/index';
 
@@ -14,6 +14,18 @@ const PORT = 3000;
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+// app.use(cors());
+app.use(cors({ credentials: true, origin: 'http://localhost:8080' }));
+
+// app.use(function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept, authorization'
+//   );
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+//   next();
+// });
 
 // root directory, send index.html
 app.get('/', (req, res) => {
@@ -24,8 +36,9 @@ app.get('/', (req, res) => {
 //                     SPOTIFY OAUTH
 //========================================================
 
-let redirect_uri = process.env.REDIRECT_URI || 'http://localhost:3000/callback';
-let request = require('request');
+const redirect_uri =
+  process.env.REDIRECT_URI || 'http://localhost:3000/callback';
+const request = require('request');
 
 app.get('/login', function (req, res) {
   res.redirect(
@@ -40,8 +53,8 @@ app.get('/login', function (req, res) {
 });
 
 app.get('/callback', function (req, res) {
-  let code = req.query.code || null;
-  let authOptions = {
+  const code = req.query.code || null;
+  const authOptions = {
     url: 'https://accounts.spotify.com/api/token',
     form: {
       code: code,
@@ -59,8 +72,8 @@ app.get('/callback', function (req, res) {
   request.post(
     authOptions,
     function (error: any, response: Response, body: any) {
-      var access_token = body.access_token;
-      let uri = 'http://localhost:3000/playlist';
+      const access_token = body.access_token;
+      const uri = 'http://localhost:8080/home';
       res.cookie('access_token', access_token);
       res.redirect(uri);
     }
@@ -81,7 +94,7 @@ app.get('/callback', function (req, res) {
 // });
 
 // routing
-// app.use('/playlist', playlistRouter);
+app.use('/playlist', playlistRouter);
 app.use('/api/playlist', playlistRouter);
 app.use('/api/user', userRouter);
 

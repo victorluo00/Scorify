@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, { useCallback } from 'react';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -20,11 +20,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: '#191414',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   button: {
     // margin: theme.spacing(3, 0, 2),
-    backgroundColor: "#1DB954",
+    backgroundColor: '#1DB954',
     marginTop: '80px',
     paddingLeft: '10px',
     paddingRight: '10px',
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   projectName: {
     color: 'white',
     fontSize: '180px',
-    position: 'relative'
+    position: 'relative',
   },
   descriptionText: {
     color: 'white',
@@ -47,30 +47,43 @@ const useStyles = makeStyles((theme) => ({
   spotifyLogo: {
     // width: '35px',
     // height: '40px'
-  }
-
+  },
 }));
 
 export default function LandingPage(): JSX.Element {
   const classes = useStyles();
-  
+
+  function login() {
+    console.log('login function invoked');
+    window.location.href = 'http://localhost:3000/login';
+  }
+
   return (
-    <Grid container component="main" className={classes.root}>
+    <Grid container component='main' className={classes.root}>
       <CssBaseline />
-      <Grid item xs={12} sm={12} md={12}className={classes.screen} >
-        <Typography component='div' className={classes.projectName}>Scorify</Typography>
+      <Grid item xs={12} sm={12} md={12} className={classes.screen}>
+        <Typography component='div' className={classes.projectName}>
+          Scorify
+        </Typography>
         <div className={classes.descriptionText}>Score your playlists</div>
         <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              className={classes.button}
-              startIcon={<Avatar className={classes.spotifyLogo} src={'https://w7.pngwing.com/pngs/879/271/png-transparent-spotify-computer-icons-streaming-media-music-home-icons-hand-logo-music-download.png'} />}
-            >
-              Log In With Spotify
-            </Button>
-        </Grid>
-
+          type='submit'
+          variant='contained'
+          color='primary'
+          className={classes.button}
+          startIcon={
+            <Avatar
+              className={classes.spotifyLogo}
+              src={
+                'https://w7.pngwing.com/pngs/879/271/png-transparent-spotify-computer-icons-streaming-media-music-home-icons-hand-logo-music-download.png'
+              }
+            />
+          }
+          onClick={() => login()}
+        >
+          Log In With Spotify
+        </Button>
+      </Grid>
     </Grid>
   );
 }
