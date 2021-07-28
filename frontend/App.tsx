@@ -8,15 +8,16 @@ import PlaylistDetailScreen from './components/screens/PlaylistDetailScreen';
 import './index.css';
 
 export const App: FC = () => {
-  return (
-    <div>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={LandingPage} />
-          <Route path="/home" component={HomeScreen} />
-          {/* <Route path="/user/:accessToken/:refreshToken" component={HomeScreen} /> */}
-        </Switch>
-      </Router>
-    </div>
-  );
+	return (
+		<div>
+			<Router>
+				<Switch>
+					<Route exact path='/' component={LandingPage} />
+					<Route path='/home' component={HomeScreen} />
+					{/* <Route path="/user/:accessToken/:refreshToken" component={HomeScreen} /> */}
+					<Route path='/playlistdetails' component={PlaylistDetailScreen} />
+				</Switch>
+			</Router>
+		</div>
+	);
 };
