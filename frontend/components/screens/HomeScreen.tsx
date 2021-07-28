@@ -26,12 +26,23 @@ export default function AuthScreen(): JSX.Element {
   for (let i = 0; i < 10; i++) {
     playlists.push(
       <PlaylistBox
-        name="Bangers Only"
+        name='Bangers Only'
         playlistId={69 + i}
-        photo="/../../assets/PlaylistCover.png"
+        photo='/../../assets/PlaylistCover.png'
       />
     );
   }
+
+  function getPlaylist() {
+    console.log('getPlaylist');
+    fetch('http://localhost:3000/playlist', {
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then((data) => data.json())
+      .then((data) => console.log(data));
+  }
+
   fetch('/api/playlist')
     //iterate through res
     .then((res) => res.json())
@@ -63,20 +74,22 @@ export default function AuthScreen(): JSX.Element {
   return (
     <>
       <CssBaseline />
-      <AppBar position="static">
+      <AppBar position='static'>
         <Toolbar>
           <IconButton
-            edge="start"
+            edge='start'
             className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
+            color='inherit'
+            aria-label='menu'
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            News
+          <Typography variant='h6' className={classes.title}>
+            Scorify
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button onClick={getPlaylist} color='inherit'>
+            Sign Out
+          </Button>
         </Toolbar>
       </AppBar>
       <HomePage>
