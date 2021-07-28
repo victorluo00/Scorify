@@ -33,11 +33,12 @@ module.exports = {
   },
   plugins: [htmlPlugin],
   devServer: {
-    proxy: {
-      '/api': 'http://localhost:3000',
-    },
+    // proxy: {
+    //   '/': 'http://localhost:3000/',
+    // },
     contentBase: path.join(__dirname, 'build'),
     compress: true,
     port: 8080,
+    historyApiFallback: true,
   },
 };

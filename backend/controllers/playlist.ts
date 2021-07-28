@@ -29,6 +29,7 @@ class PlaylistController {
       '🚀 | file: server.ts | line 112 | loadDataMiddleware | access_token',
       access_token
     );
+    console.log(req.cookies);
 
     // const rawUser = await fetch(`https://api.spotify.com/v1/me`, {
     //   method: 'GET',
@@ -60,6 +61,10 @@ class PlaylistController {
         res.redirect('/login');
     }
 
+    console.log(
+      '🚀 | file: playlist.ts | line 68 | PlaylistController | loadDataMiddleware | res.locals.playlists',
+      res.locals.playlists
+    );
     next();
   }
 
@@ -72,11 +77,12 @@ class PlaylistController {
 
     const playlistStorage = items.map((el: any) => {
       //F ilter out only the id, name, url, track api link, and total number of tracks, start playlistRating at 0
-      let tempPlaylist = {
+      const tempPlaylist = {
         id: el.id,
         name: el.name,
         url: el['external_urls'].spotify,
         tracks: el.tracks.href,
+        photo: el.images[0],
         totalTracks: el.tracks.total,
         playlistRating: 0,
       };
@@ -99,62 +105,70 @@ class PlaylistController {
       const parsedPlaylistData = await rawPlaylistData.json();
 
       //after getting details for each playlist, filter out important data
+      // console.log(
+      //   '🚀 | file: playlist.ts | line 113 | PlaylistController | parsedPlaylistData.items?.map | parsedPlaylistData.items',
+      //   parsedPlaylistData.items
+      // );
 
-      const filteredTrackData = await Promise.all(
-        //Promise.all waits for all promise to fulfill
-        parsedPlaylistData.items?.map(async (el: any) => {
-          //for each song, only grab track id, artist, name, etc
-          const trackObj = {
-            trackId: el.track.id,
-            artistName: el.track.artists?.map((el: any) => {
-              return el.name;
-            }),
-            trackName: el.track.name,
-            popularity: el.track.popularity,
-            songData: {
-              valence: 0,
-              energy: 0,
-              danceability: 0,
-              speechiness: 0,
-              mode: 0,
-              loudness: 0,
+      // const filteredTrackData = await Promise?.all(
+      //Promise.all waits for all promise to fulfill
+
+      const filteredTrackData: any = [];
+
+      for (const item of parsedPlaylistData.items) {
+        const trackObj = {
+          trackId: item.track.id,
+          artistName: item.track.artists?.map((item: any) => {
+            return item.name;
+          }),
+          trackName: item.track.name,
+          popularity: item.track.popularity,
+          songData: {
+            valence: 0,
+            energy: 0,
+            danceability: 0,
+            speechiness: 0,
+            mode: 0,
+            loudness: 0,
+          },
+          rating: 0,
+        };
+
+        // for each song, fetch for more technical details
+        const rawSongData = await fetch(
+          `https://api.spotify.com/v1/audio-features/${trackObj.trackId}`,
+          {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + access_token,
             },
-            rating: 0,
-          };
+          }
+        );
 
-          // for each song, fetch for more technical details
-          const rawSongData = await fetch(
-            `https://api.spotify.com/v1/audio-features/${trackObj.trackId}`,
-            {
-              method: 'GET',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + access_token,
-              },
-            }
-          );
+        trackObj.songData = await rawSongData.json();
 
-          trackObj.songData = await rawSongData.json();
+        // calculate rating for each song
+        trackObj.rating = Math.round(
+          trackObj.popularity * 0.4 +
+            trackObj.songData.valence * 10 +
+            trackObj.songData.energy * 10 +
+            trackObj.songData.danceability * 10 +
+            (1 - trackObj.songData.speechiness) * 10 +
+            trackObj.songData.mode * 10 +
+            ((60 + trackObj.songData.loudness) / 60) * 10
+        );
 
-          // calculate rating for each song
-          trackObj.rating = Math.round(
-            trackObj.popularity * 0.4 +
-              trackObj.songData.valence * 10 +
-              trackObj.songData.energy * 10 +
-              trackObj.songData.danceability * 10 +
-              (1 - trackObj.songData.speechiness) * 10 +
-              trackObj.songData.mode * 10 +
-              ((60 + trackObj.songData.loudness) / 60) * 10
-          );
+        playlistStorage[i].playlistRating += trackObj.rating;
 
-          playlistStorage[i].playlistRating += trackObj.rating;
+        filteredTrackData.push(trackObj);
+      }
 
-          return trackObj;
-        })
-      );
-
-      playlistObj[`playlist${i + 1}`] = { songs: filteredTrackData };
+      playlistObj[`playlist${i + 1}`] = {
+        songs: filteredTrackData,
+        photo: playlistStorage[i].photo,
+      };
 
       // compute average rating for each playlist
       playlistObj[`playlist${i + 1}`].rating = Math.round(
