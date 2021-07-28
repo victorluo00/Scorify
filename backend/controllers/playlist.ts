@@ -71,8 +71,8 @@ class PlaylistController {
     const { items } = res.locals.playlists; //read basic data from res.locals.playlist
 
     const playlistStorage = items.map((el: any) => {
-      //Filter out only the id, name, url, track api link, and total number of tracks, start playlistRating at 0
-      let playlistObj = {
+      //F ilter out only the id, name, url, track api link, and total number of tracks, start playlistRating at 0
+      let tempPlaylist = {
         id: el.id,
         name: el.name,
         url: el['external_urls'].spotify,
@@ -80,7 +80,7 @@ class PlaylistController {
         totalTracks: el.tracks.total,
         playlistRating: 0,
       };
-      return playlistObj;
+      return tempPlaylist;
     });
 
     for (let i = 0; i < playlistStorage.length; i++) {
@@ -97,14 +97,10 @@ class PlaylistController {
       });
 
       const parsedPlaylistData = await rawPlaylistData.json();
-      console.log(
-        '🚀 | file: playlist.ts | line 98 | PlaylistController | getPlaylistData | parsedPlaylistData',
-        parsedPlaylistData
-      );
 
       //after getting details for each playlist, filter out important data
 
-      const filteredPlaylistData = await Promise.all(
+      const filteredTrackData = await Promise.all(
         //Promise.all waits for all promise to fulfill
         parsedPlaylistData.items?.map(async (el: any) => {
           //for each song, only grab track id, artist, name, etc
@@ -152,17 +148,19 @@ class PlaylistController {
               ((60 + trackObj.songData.loudness) / 60) * 10
           );
 
-          playlistObj.playlistRating += trackObj.rating;
+          playlistStorage[i].playlistRating += trackObj.rating;
 
           return trackObj;
         })
       );
 
-      playlistObj[`playlist${i + 1}`] = filteredPlaylistData;
-    }
+      playlistObj[`playlist${i + 1}`] = { songs: filteredTrackData };
 
-    // compute average rating for each playlist
-    Math.trunc((playlistObj.playlistRating /= playlistObj.totalTracks));
+      // compute average rating for each playlist
+      playlistObj[`playlist${i + 1}`].rating = Math.round(
+        playlistStorage[i].playlistRating / playlistStorage[i].totalTracks
+      );
+    }
 
     res.locals.playlistObj = playlistObj;
     next();
