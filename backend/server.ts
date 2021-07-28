@@ -67,9 +67,6 @@ app.get('/callback', function (req, res) {
   );
 });
 
-//on component render, send get request to /playlist
-app.use('/playlist', playlistRouter);
-
 // app.get('/home', loadDataMiddleware, (req, res) => {
 //   res
 //     .status(200)
@@ -84,6 +81,7 @@ app.use('/playlist', playlistRouter);
 // });
 
 // routing
+// app.use('/playlist', playlistRouter);
 app.use('/api/playlist', playlistRouter);
 app.use('/api/user', userRouter);
 
