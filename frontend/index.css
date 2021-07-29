@@ -2,3 +2,7 @@
   background-color: '#cfe8fc';
   height: '100vh';
 }
+
+* {
+  /* background-color: rgba(99, 185, 255, 0.5) */
+}
