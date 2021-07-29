@@ -5,10 +5,7 @@ import {
   Route,
   Link,
   Redirect,
-<<<<<<< HEAD
   useHistory,
-=======
->>>>>>> f639ac4c199d9b7a8d3e6448a5603f98944b17f0
 } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
@@ -34,7 +31,7 @@ interface Playlist {
 
 export default function AuthScreen(): JSX.Element {
   const playlistList: object[] = [];
-  let redirectProps: object[];
+  let redirectProps: any[];
   // const [playlistData, setPlaylistData] = useState(Array<any>());
   const [playlistBoxList, setPlaylistBoxList] = useState(Array<any>());
   const history = useHistory();
@@ -45,7 +42,6 @@ export default function AuthScreen(): JSX.Element {
   const routes: Array<any> = [];
   //fetch req to endpoint
 
-<<<<<<< HEAD
   function renderPlaylistDetailScreen(id: number) {
     console.log('id', id);
     console.log('playlistList', playlistList);
@@ -63,11 +59,11 @@ export default function AuthScreen(): JSX.Element {
     // setGoToPlaylist(redirectProps);
     // let history = useHistory();
     history.push('/playlistdetails', {
-      playlistName: redirectProps.playlistName,
-      playlistId: redirectProps.playlistId,
-      photo: redirectProps.photo,
-      rating: redirectProps.rating,
-      songs: redirectProps.songs,
+      playlistName: redirectProps[0].playlistName,
+      playlistId: redirectProps[0].playlistId,
+      photo: redirectProps[0].photo,
+      rating: redirectProps[0].rating,
+      songs: redirectProps[0].songs,
     });
     // return (
     //   <Redirect
@@ -84,11 +80,6 @@ export default function AuthScreen(): JSX.Element {
     //   ></Redirect>
     // );
   }
-=======
-  // function renderPlaylistDetailScreen (id) {
-
-  // }
->>>>>>> f639ac4c199d9b7a8d3e6448a5603f98944b17f0
 
   function getPlaylist() {
     console.log('getPlaylist', Date.now());
@@ -102,11 +93,7 @@ export default function AuthScreen(): JSX.Element {
         return data;
       })
       .then((data) => {
-<<<<<<< HEAD
         let counter = 0;
-=======
-        const playlistList: object[] = [];
->>>>>>> f639ac4c199d9b7a8d3e6448a5603f98944b17f0
         const playlistBoxList: Array<any> = [];
         console.log(
           '🚀 | file: HomeScreen.tsx | line 56 | getPlaylist | data.playlist',
@@ -114,10 +101,6 @@ export default function AuthScreen(): JSX.Element {
         );
         for (let curPlaylist in data.playlist) {
           console.log('loop iteration');
-<<<<<<< HEAD
-=======
-
->>>>>>> f639ac4c199d9b7a8d3e6448a5603f98944b17f0
           let ele = data.playlist[curPlaylist];
           const playlistObj: Playlist = {
             playlistName: ele.name,
@@ -135,16 +118,10 @@ export default function AuthScreen(): JSX.Element {
           );
           playlistBoxList.push(
             <PlaylistBox
-<<<<<<< HEAD
               // /*onClick={(e:any)=> <Redirect to = {{pathname: `/${e.target.id}`}}/> }*/
               id={counter++}
               redirect={renderPlaylistDetailScreen}
               playlistName={playlistObj.playlistName}
-=======
-              /*onClick={(e:any)=> <Redirect to = {{pathname: `/${e.target.id}`}}/> }*/ playlistName={
-                playlistObj.playlistName
-              }
->>>>>>> f639ac4c199d9b7a8d3e6448a5603f98944b17f0
               playlistId={playlistObj.playlistId}
               photo={playlistObj.photo}
             />
@@ -155,7 +132,6 @@ export default function AuthScreen(): JSX.Element {
           );
         }
         setPlaylistBoxList(playlistBoxList);
-<<<<<<< HEAD
         // playlistList.forEach((ele: any) => {
         //   routes.push(
         //     <Route path={`/${ele.playlistId}`}>
@@ -169,21 +145,6 @@ export default function AuthScreen(): JSX.Element {
         //     </Route>
         //   );
         // });
-=======
-        playlistList.forEach((ele: any) => {
-          routes.push(
-            <Route path={`/${ele.playlistId}`}>
-              <PlaylistDetailScreen
-                playlistName={ele.playlistName}
-                playlistId={ele.id}
-                photo={ele.photo.url}
-                rating={ele.rating}
-                songs={ele.songs}
-              />
-            </Route>
-          );
-        });
->>>>>>> f639ac4c199d9b7a8d3e6448a5603f98944b17f0
       });
   }
 
@@ -221,7 +182,6 @@ export default function AuthScreen(): JSX.Element {
           {playlistBoxList}
         </div>
       </HomePage>
-<<<<<<< HEAD
       {/* <div>
         <Router>
           <Switch>
@@ -232,13 +192,6 @@ export default function AuthScreen(): JSX.Element {
           </Switch>
         </Router>
       </div> */}
-=======
-      <div>
-        <Router>
-          <Switch>{routes}</Switch>
-        </Router>
-      </div>
->>>>>>> f639ac4c199d9b7a8d3e6448a5603f98944b17f0
     </>
   );
 }

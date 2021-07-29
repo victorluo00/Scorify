@@ -11,9 +11,10 @@ import Paper from '@material-ui/core/Paper';
 // } from '@devexpress/dx-react-chart-material-ui';
 import { Radar } from 'react-chartjs-2';
 
-const ScoreBreakdown: FC = () => {
+const ScoreBreakdown = ({ rating }: any) => {
   const classes = useStyles();
-  const [percent, setPercent] = useState(20);
+  //if you want to use rating, use rating.rating
+  const { danceability, energy, loudness, valence, mode, speechiness } = rating;
 
   // const [progress, setProgress] = React.useState(0);
   // useEffect(() => {
@@ -70,7 +71,14 @@ const ScoreBreakdown: FC = () => {
     datasets: [
       {
         label: 'This Playlist',
-        data: Object.values(mockData).map((el) => el * 100),
+        data: [
+          valence * 100,
+          energy * 100,
+          danceability * 100,
+          speechiness * 100,
+          mode * 100,
+          loudness * 100,
+        ],
         backgroundColor: 'rgba(255, 99, 132, 0.7)',
         borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1,
@@ -151,7 +159,7 @@ const ScoreBreakdown: FC = () => {
   };
 
   return (
-    <Grid container component='main' className={classes.root}>
+    <Grid container component="main" className={classes.root}>
       <Typography className={classes.text}>Score Breakdown</Typography>
       <div>
         <Radar

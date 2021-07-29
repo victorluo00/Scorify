@@ -13,22 +13,28 @@ interface Props {
   songs: Array<any>;
 }
 
-const PlaylistDetailScreen = ({playlistName, playlistId, photo, rating, songs}: Props) => {
-	console.log('playlistName: ', playlistName)
-	console.log('playlistId: ', playlistId)
-	console.log('photo: ', photo)
-	console.log('rating: ', rating)
-	console.log('songs: ', songs)
+const PlaylistDetailScreen = (props: any) => {
+  console.log('history.location', props.history.location.state);
+  const { playlistName, playlistId, photo, rating, songs } =
+    props.history.location.state;
 
-	return (
-		<>
-			<Score />
-			<Share />
-			<ScoreBreakdown />
-			<GenreBreakdown />
-			<FilterGenreMood />
-		</>
-	);
+  console.log('playlistName: ', playlistName);
+  console.log('playlistId: ', playlistId);
+  console.log('photo: ', photo);
+  console.log('rating: ', rating);
+  console.log('songs: ', songs);
+
+  return (
+    <>
+      <Score rating={rating} />
+      <Share />
+      <ScoreBreakdown
+        rating={rating}
+      />
+      <GenreBreakdown />
+      <FilterGenreMood />
+    </>
+  );
 };
 
 export default PlaylistDetailScreen;
