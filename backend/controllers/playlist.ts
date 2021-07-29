@@ -61,10 +61,10 @@ class PlaylistController {
         res.redirect('/login');
     }
 
-    console.log(
-      '🚀 | file: playlist.ts | line 68 | PlaylistController | loadDataMiddleware | res.locals.playlists',
-      res.locals.playlists
-    );
+    // console.log(
+    //   '🚀 | file: playlist.ts | line 68 | PlaylistController | loadDataMiddleware | res.locals.playlists',
+    //   res.locals.playlists
+    // );
     next();
   }
 
@@ -160,20 +160,41 @@ class PlaylistController {
             ((60 + trackObj.songData.loudness) / 60) * 10
         );
 
-        playlistStorage[i].playlistRating += trackObj.rating;
+        playlistStorage[i].playlistRating ? playlistStorage[i].playlistRating = {
+          rating: playlistStorage[i].playlistRating.rating += trackObj.rating,
+          valence: playlistStorage[i].playlistRating.valence += trackObj.songData.valence,
+          energy: playlistStorage[i].playlistRating.energy += trackObj.songData.energy,
+          danceability: playlistStorage[i].playlistRating.danceability += trackObj.songData.danceability,
+          loudness: playlistStorage[i].playlistRating.loudness += ((60 + trackObj.songData.loudness) / 60),
+        } : playlistStorage[i].playlistRating = {
+          rating: trackObj.rating,
+          valence: trackObj.songData.valence,
+          energy: trackObj.songData.energy,
+          danceability: trackObj.songData.danceability,
+          loudness: ((60 + trackObj.songData.loudness) / 60),
+        }
 
         filteredTrackData.push(trackObj);
       }
 
+      console.log(playlistStorage)
+
       playlistObj[`playlist${i + 1}`] = {
+        name: playlistStorage[i].name,
         songs: filteredTrackData,
         photo: playlistStorage[i].photo,
+        id: playlistStorage[i].id,
       };
 
+      const totalTracks = playlistStorage[i].totalTracks;
       // compute average rating for each playlist
-      playlistObj[`playlist${i + 1}`].rating = Math.round(
-        playlistStorage[i].playlistRating / playlistStorage[i].totalTracks
-      );
+      playlistObj[`playlist${i + 1}`].rating = {
+        rating: Math.round(playlistStorage[i].playlistRating.rating / totalTracks),
+        valence: Math.round(100 * playlistStorage[i].playlistRating.valence / totalTracks) / 100,
+        energy: Math.round(100* playlistStorage[i].playlistRating.energy / totalTracks) / 100,
+        danceability: Math.round(100 * playlistStorage[i].playlistRating.danceability / totalTracks) / 100,
+        loudness: Math.round(100 * playlistStorage[i].playlistRating.loudness / totalTracks) / 100,
+      }
     }
 
     res.locals.playlistObj = playlistObj;

@@ -49,9 +49,11 @@ const useStyles = makeStyles({
 	instagram: {
 		backgroundColor: '#fe4164',
 		margin: '30px',
+		color: 'white'
 	},
 	twitter: {
 		backgroundColor: '#1DA1F2',
 		margin: '30px',
+		color: 'white'
 	},
 });
