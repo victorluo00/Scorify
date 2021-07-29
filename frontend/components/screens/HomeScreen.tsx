@@ -5,6 +5,7 @@ import {
   Route,
   Link,
   Redirect,
+  useHistory,
 } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
@@ -30,9 +31,11 @@ interface Playlist {
 
 export default function AuthScreen(): JSX.Element {
   const playlistList: object[] = [];
+  let redirectProps: object[];
   // const [playlistData, setPlaylistData] = useState(Array<any>());
   const [playlistBoxList, setPlaylistBoxList] = useState(Array<any>());
-  // const history = useHistory()
+  const history = useHistory();
+  // const [goToPlaylist, setGoToPlaylist] = useState(null);
 
   const classes = useStyles();
   //declare playlists array
@@ -42,24 +45,40 @@ export default function AuthScreen(): JSX.Element {
   function renderPlaylistDetailScreen(id: number) {
     console.log('id', id);
     console.log('playlistList', playlistList);
-    const redirectProps = playlistList.filter((ele) => {
-      console.log('ele', ele);
-      return ele.id === id;
-    })[0];
-    return (
-      <Redirect
-        to={{
-          pathname: `/playlist`,
-          // state: {
-          //   playlistName: redirectProps.playlistName,
-          //   playlistId: redirectProps.playlistId,
-          //   photo: redirectProps.photo,
-          //   rating: redirectProps.rating,
-          //   songs: redirectProps.songs,
-          // },
-        }}
-      ></Redirect>
-    );
+    redirectProps = playlistList.filter((ele: any) => {
+      console.log('ele.playlistId', ele.playlistId, 'id', id);
+      console.log(
+        'typeof ele.playlistId',
+        typeof ele.playlistId,
+        'typeof id',
+        typeof id
+      );
+      return ele.playlistId === id;
+    });
+    console.log('redirectProps', redirectProps);
+    // setGoToPlaylist(redirectProps);
+    // let history = useHistory();
+    history.push('/playlistdetails', {
+      playlistName: redirectProps.playlistName,
+      playlistId: redirectProps.playlistId,
+      photo: redirectProps.photo,
+      rating: redirectProps.rating,
+      songs: redirectProps.songs,
+    });
+    // return (
+    //   <Redirect
+    //     to={{
+    //       pathname: `/playlistdetails`,
+    //       state: {
+    //         playlistName: redirectProps.playlistName,
+    //         playlistId: redirectProps.playlistId,
+    //         photo: redirectProps.photo,
+    //         rating: redirectProps.rating,
+    //         songs: redirectProps.songs,
+    //       },
+    //     }}
+    //   ></Redirect>
+    // );
   }
 
   function getPlaylist() {
@@ -74,6 +93,7 @@ export default function AuthScreen(): JSX.Element {
         return data;
       })
       .then((data) => {
+        let counter = 0;
         const playlistBoxList: Array<any> = [];
         console.log(
           '🚀 | file: HomeScreen.tsx | line 56 | getPlaylist | data.playlist',
@@ -81,11 +101,10 @@ export default function AuthScreen(): JSX.Element {
         );
         for (let curPlaylist in data.playlist) {
           console.log('loop iteration');
-
           let ele = data.playlist[curPlaylist];
           const playlistObj: Playlist = {
             playlistName: ele.name,
-            playlistId: ele.id,
+            playlistId: counter,
             photo: ele.photo
               ? ele.photo.url
               : 'https://www.sleek-mag.com/wp-content/uploads/2016/08/AlbumCovers_Blonde.jpg',
@@ -100,7 +119,7 @@ export default function AuthScreen(): JSX.Element {
           playlistBoxList.push(
             <PlaylistBox
               // /*onClick={(e:any)=> <Redirect to = {{pathname: `/${e.target.id}`}}/> }*/
-              id={playlistObj.playlistId}
+              id={counter++}
               redirect={renderPlaylistDetailScreen}
               playlistName={playlistObj.playlistName}
               playlistId={playlistObj.playlistId}
@@ -113,19 +132,19 @@ export default function AuthScreen(): JSX.Element {
           );
         }
         setPlaylistBoxList(playlistBoxList);
-        playlistList.forEach((ele: any) => {
-          routes.push(
-            <Route path={`/${ele.playlistId}`}>
-              <PlaylistDetailScreen
-                playlistName={ele.playlistName}
-                playlistId={ele.id}
-                photo={ele.photo}
-                rating={ele.rating}
-                songs={ele.songs}
-              />
-            </Route>
-          );
-        });
+        // playlistList.forEach((ele: any) => {
+        //   routes.push(
+        //     <Route path={`/${ele.playlistId}`}>
+        //       <PlaylistDetailScreen
+        //         playlistName={ele.playlistName}
+        //         playlistId={ele.id}
+        //         photo={ele.photo}
+        //         rating={ele.rating}
+        //         songs={ele.songs}
+        //       />
+        //     </Route>
+        //   );
+        // });
       });
   }
 
@@ -163,16 +182,16 @@ export default function AuthScreen(): JSX.Element {
           {playlistBoxList}
         </div>
       </HomePage>
-      <div>
+      {/* <div>
         <Router>
           <Switch>
             <Route
-              path="/playlist"
+              path="/playlistdetails"
               render={(props) => <PlaylistDetailScreen {...props} />}
             ></Route>
           </Switch>
         </Router>
-      </div>
+      </div> */}
     </>
   );
 }
