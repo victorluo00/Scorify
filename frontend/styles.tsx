@@ -8,6 +8,7 @@ export const useStyles = makeStyles({
     height: '100vh',
     paddingLeft: 0,
     paddingRight: 0,
+    backgroundColor: '#191414',
   },
   container: {
     backgroundColor: '#cfe8fc',

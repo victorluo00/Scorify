@@ -21,7 +21,7 @@ const PlaylistBox = ({
   return (
     <Wrapper id={id} onClick={(e: any) => redirect(Number(e.target.id))}>
       <Image src={photo} />
-      <h1>{playlistName}</h1>
+      <h1 style={{marginLeft: '10px'}}>{playlistName}</h1>
     </Wrapper>
   );
 };
@@ -29,8 +29,9 @@ const PlaylistBox = ({
 const Wrapper = styled.div`
   display: flex;
   border: solid 1px #d7dbd8;
-  border-radius: 10px;
+  border-radius: 8px;
   width: 32%;
+  padding-right: 10px;
   min-width: 400px;
   height: 150px;
   margin: 10px;
