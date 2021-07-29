@@ -29,20 +29,49 @@ const ScoreBreakdown: FC = () => {
   //     clearInterval(timer);
   //   };
   // }, []);
+	interface PlaylistRating {
+		energy: number;
+		danceability: number;
+		speechiness: number;
+		mode: number;
+		valence: number;
+		loudness: number;
+		[key: string]: number;
+	}
+	
+	const mockData: PlaylistRating = {
+		'valence': 0.40,
+		'energy': 0.20,
+		'danceability': 0.90,
+		'speechiness': 0.10,
+		'mode': 0.20,
+		'loudness': 0.60,
+	}
 
 
 	return (
 		<Grid container component='main' className={classes.root}>
 			<Typography className={classes.text}>Score Breakdown</Typography>
 
-			<Grid spacing={2} container>
+			<Grid spacing={2} container direction='column'>
+					{
+						Object.keys(mockData).map((key: keyof PlaylistRating) => {
+							return (
+								<div >
+									<Grid xs spacing={2}>
+										<span>hello</span><BorderLinearProgress value={mockData[key] * 100} variant="determinate" title="test" />
+									</Grid>
+								</div>
+							)
+						})
+					}
+			</Grid>   
+
+			{/* <Grid spacing={2} container>
 				<Grid xs item>
 						<BorderLinearProgress value={80} variant="determinate" title="test" />
 				</Grid>
-				<Grid xs item>
-						<CircularProgress size='140px' value={80} variant="determinate" title="test" />
-				</Grid>
-			</Grid>   
+				</Grid>   */}
 
 		</Grid>
 	)};
@@ -74,10 +103,11 @@ const useStyles = makeStyles({
 
 const BorderLinearProgress = withStyles(theme => ({
 		root: {
-			height: 10,
+			height: 30,
 			borderRadius: 5,
-			marginLeft: 15,
-			marginRight: 15
+			marginLeft: 30,
+			marginRight: 30,
+			marginBottom: 10,
 		},
 		colorPrimary: {
 			backgroundColor:

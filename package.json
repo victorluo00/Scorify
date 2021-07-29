@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon backend/server.ts",
     "compile": "tsc .",
-    "dev": "concurrently \"nodemon ./backend/server.ts\" \"webpack serve\""
+    "dev": "concurrently  \"webpack serve\"",
+    "doNotUse": "\"nodemon ./backend/server.ts\""
   },
   "author": "",
   "license": "ISC",
@@ -23,7 +24,6 @@
     "css-loader": "^6.2.0",
     "cypress": "^8.0.0",
     "enzyme": "^3.11.0",
-    "eslint": "^7.31.0",
     "html-webpack-plugin": "^5.3.2",
     "jest": "^27.0.6",
     "nodemon": "^2.0.12",
@@ -42,6 +42,7 @@
     "@material-ui/icons": "^4.11.2",
     "bootstrap": "^5.0.2",
     "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1",

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import React, { FC } from 'react';
 // import AuthScreen from './components/screens/AuthScreen';
-// import HomeScreen from './components/screens/HomeScreen';
+import HomeScreen from './components/screens/HomeScreen';
 import LandingPage from './components/screens/LandingPage';
 import PlaylistDetailScreen from './components/screens/PlaylistDetailScreen';
 
@@ -13,7 +13,7 @@ export const App: FC = () => {
 			<Router>
 				<Switch>
 					<Route exact path='/' component={LandingPage} />
-					{/* <Route path='/home' component={HomeScreen} /> */}
+					<Route path='/home' component={HomeScreen} />
 					{/* <Route path="/user/:accessToken/:refreshToken" component={HomeScreen} /> */}
 					<Route path='/playlistdetails' component={PlaylistDetailScreen} />
 				</Switch>
