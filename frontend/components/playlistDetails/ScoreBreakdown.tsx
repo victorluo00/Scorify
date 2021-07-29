@@ -4,11 +4,11 @@ import { makeStyles } from '@material-ui/core';
 import { LinearProgress, CircularProgress } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import {
-  Chart,
-  PieSeries,
-  Title,
-} from '@devexpress/dx-react-chart-material-ui';
+// import {
+//   Chart,
+//   PieSeries,
+//   Title,
+// } from '@devexpress/dx-react-chart-material-ui';
 import { Radar } from 'react-chartjs-2';
 
 const ScoreBreakdown: FC = () => {
@@ -74,7 +74,7 @@ const ScoreBreakdown: FC = () => {
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
         borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1,
-        lineTension: 0.4,
+        // lineTension: 0.4,
       },
       {
         label: 'Average Score',
@@ -82,7 +82,7 @@ const ScoreBreakdown: FC = () => {
         backgroundColor: 'rgba(35, 99, 132, 0.5)',
         borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1,
-        lineTension: 0.4,
+        // lineTension: 1,
       },
     ],
   };
