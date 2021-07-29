@@ -51,7 +51,7 @@ const GenreBreakdown = ({ songs }: any) => {
 			<CssBaseline />
 			<Grid container component='main' className={classes.root}>
 				<Typography component='div' className={classes.text}>
-					Genre Breakdown
+					Boppy Meter
 				</Typography>
 				<div>
 					<Doughnut data={data} className={classes.doughnutContainer} />
