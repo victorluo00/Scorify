@@ -168,6 +168,10 @@ class PlaylistController {
                 trackObj.songData.valence),
               energy: (playlistStorage[i].playlistRating.energy +=
                 trackObj.songData.energy),
+              mode: (playlistStorage[i].playlistRating.energy +=
+                trackObj.songData.mode),
+              speechiness: (playlistStorage[i].playlistRating.energy +=
+                trackObj.songData.speechiness),
               danceability: (playlistStorage[i].playlistRating.danceability +=
                 trackObj.songData.danceability),
               loudness: (playlistStorage[i].playlistRating.loudness +=
@@ -208,6 +212,14 @@ class PlaylistController {
         energy:
           Math.round(
             (100 * playlistStorage[i].playlistRating.energy) / totalTracks
+          ) / 100,
+        mode:
+          Math.round(
+            (100 * playlistStorage[i].playlistRating.mode) / totalTracks
+          ) / 100,
+          speechiness:
+          Math.round(
+            (100 * playlistStorage[i].playlistRating.speechiness) / totalTracks
           ) / 100,
         danceability:
           Math.round(
