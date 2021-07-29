@@ -10,10 +10,11 @@ import './index.css';
 export const App: FC = () => {
 	return (
 		<div>
+			<PlaylistDetailScreen />
 			<Router>
 				<Switch>
 					<Route exact path='/' component={LandingPage} />
-					<Route path='/home' component={HomeScreen} />
+					{/* <Route path='/home' component={HomeScreen} /> */}
 					{/* <Route path="/user/:accessToken/:refreshToken" component={HomeScreen} /> */}
 					<Route path='/playlistdetails' component={PlaylistDetailScreen} />
 				</Switch>
