@@ -44,6 +44,7 @@
     "@material-ui/x-grid": "^4.0.0-alpha.34",
     "@material-ui/x-grid-data-generator": "^4.0.0-alpha.34",
     "bootstrap": "^5.0.2",
+    "chartjs": "^0.3.24",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
