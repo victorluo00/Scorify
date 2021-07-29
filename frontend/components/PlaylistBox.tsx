@@ -19,7 +19,7 @@ const PlaylistBox = ({
 }: Props) => {
   console.log(playlistName, playlistId, photo);
   return (
-    <Wrapper id={id} onClick={(e) => redirect(Number(e.target.id))}>
+    <Wrapper id={id} onClick={(e: any) => redirect(Number(e.target.id))}>
       <Image src={photo} />
       <h1>{playlistName}</h1>
     </Wrapper>

@@ -177,6 +177,8 @@ class PlaylistController {
               rating: trackObj.rating,
               valence: trackObj.songData.valence,
               energy: trackObj.songData.energy,
+              mode: trackObj.songData.mode,
+              speechiness: trackObj.songData.speechiness,
               danceability: trackObj.songData.danceability,
               loudness: (60 + trackObj.songData.loudness) / 60,
             });
