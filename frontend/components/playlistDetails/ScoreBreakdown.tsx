@@ -4,11 +4,12 @@ import { makeStyles } from '@material-ui/core';
 import { LinearProgress, CircularProgress } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-// import {
-//   Chart,
-//   PieSeries,
-//   Title,
-// } from '@devexpress/dx-react-chart-material-ui';
+import {
+  Chart,
+  PieSeries,
+  Title,
+} from '@devexpress/dx-react-chart-material-ui';
+import { Radar } from 'react-chartjs-2';
 
 const ScoreBreakdown: FC = () => {
   const classes = useStyles();
@@ -48,44 +49,95 @@ const ScoreBreakdown: FC = () => {
     loudness: 0.6,
   };
 
+  const mockAverageData: PlaylistRating = {
+    valence: 0.8,
+    energy: 0.4,
+    danceability: 0.5,
+    speechiness: 0.6,
+    mode: 0.8,
+    loudness: 0.7,
+  };
+
+  const data = {
+    labels: [
+      'Valence',
+      'Energy',
+      'Danceability',
+      'Speechiness',
+      'Mode',
+      'Loudness',
+    ],
+    datasets: [
+      {
+        label: 'This Playlist',
+        data: Object.values(mockData).map((el) => el * 100),
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1,
+        lineTension: 0.4,
+      },
+      {
+        label: 'Average Score',
+        data: Object.values(mockAverageData).map((el) => el * 100),
+        backgroundColor: 'rgba(35, 99, 132, 0.5)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1,
+        lineTension: 0.4,
+      },
+    ],
+  };
+
+  const options = {
+    scale: {
+      ticks: { beginAtZero: true },
+      pointLabels: {
+        fontSize: 100,
+        fontColor: 'red',
+      },
+      gridLines: {
+        circular: true,
+      },
+    },
+  };
+
+  // const options = {
+  //   scale: {
+  //     pointLabels: {
+  //       fontSize: 20,
+  //     },
+  //   },
+  // };
+
   return (
-    <Grid container component='main' className={classes.root}>
-      <Typography className={classes.text}>Score Breakdown</Typography>
+    <div>
+      <Radar data={data} options={options} style={{ fontSize: '20px' }}></Radar>
+    </div>
+    // <Grid container component="main" className={classes.root}>
+    //   <Typography className={classes.text}>Score Breakdown</Typography>
 
-      <Grid spacing={2} container direction='column'>
-        {Object.keys(mockData).map((key: keyof PlaylistRating) => {
-          return (
-            <div>
-              <Grid xs spacing={2}>
-                <div
-                  style={{
-                    color: 'white',
-                    position: 'relative',
-                    margin: '0',
-                    bottom: '50%',
-                    // -ms-transform: 'translateY(-50%)',
-                    transform: 'translateY(50%)',
-                  }}
-                >
-                  {key}
-                </div>
-                <BorderLinearProgress
-                  value={mockData[key] * 100}
-                  variant='determinate'
-                  title='test'
-                />
-              </Grid>
-            </div>
-          );
-        })}
-      </Grid>
+    //   <Grid spacing={2} container direction="column">
+    //     {Object.keys(mockData).map((key: keyof PlaylistRating) => {
+    //       return (
+    //         <div>
+    //           <Grid xs spacing={2}>
+    //             <span>hello</span>
+    //             <BorderLinearProgress
+    //               value={mockData[key] * 100}
+    //               variant="determinate"
+    //               title="test"
+    //             />
+    //           </Grid>
+    //         </div>
+    //       );
+    //     })}
+    //   </Grid>
 
-      {/* <Grid spacing={2} container>
-				<Grid xs item>
-						<BorderLinearProgress value={80} variant="determinate" title="test" />
-				</Grid>
-				</Grid>   */}
-    </Grid>
+    //   {/* <Grid spacing={2} container>
+    // 		<Grid xs item>
+    // 				<BorderLinearProgress value={80} variant="determinate" title="test" />
+    // 		</Grid>
+    // 		</Grid>   */}
+    // </Grid>
   );
 };
 
